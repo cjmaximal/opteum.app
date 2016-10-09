@@ -2,6 +2,22 @@ import ProposalService from '../services/ProposalsService'
 import TooltipService from '../services/TooltipService'
 import * as types from '../vuex/mutations-types'
 
+// Добавить заявку в список
+export const eventAddProposal = ({commit}, proposal) => {
+    commit(types.EVENT_ADD_PROPOSAL, proposal)
+}
+
+// Завершить заявку
+export const eventFinishProposal = ({commit}, proposal) => {
+    commit(types.EVENT_FINISH_PROPOSAL, proposal)
+}
+
+// Удалить заявку
+export const eventDeleteProposal = ({commit}, proposalId) => {
+    commit(types.EVENT_DELETE_PROPOSAL, proposalId)
+}
+
+
 // Загрузка заявок - запрос
 export const loadProposals = ({commit}) => {
     commit(types.LOADING_PROPOSALS, true)

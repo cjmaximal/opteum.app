@@ -2,7 +2,7 @@ export default {
     createTooltips(){
         // Tooltips
         $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]:not(:disabled)').tooltip()
         });
     },
 

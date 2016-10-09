@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Events\NewProposalAdded;
+use App\Events\ProposalDeleted;
+use App\Events\ProposalFinished;
 use App\Presenters\ApiPresenter;
 use App\Proposal;
 use Auth;
@@ -42,6 +45,8 @@ class ApiProposalsController extends Controller
         Auth::user()->proposals()->save($proposal);
         $proposalWithUser = Proposal::where('id', $proposal->id)->with('user')->get()->present(ApiPresenter::class);
 
+        event(new NewProposalAdded($proposalWithUser));
+
         return response()->json($proposalWithUser);
     }
 
@@ -53,6 +58,8 @@ class ApiProposalsController extends Controller
     public function deleteProposal(Request $request, $id)
     {
         $proposal = Proposal::find($id)->delete();
+
+        event(new ProposalDeleted(['id' => $id]));
 
         return response()->json();
     }
@@ -69,6 +76,8 @@ class ApiProposalsController extends Controller
         $proposal->save();
 
         $proposalWithUser = Proposal::where('id', $proposal->id)->with('user')->get()->present(ApiPresenter::class);
+
+        event(new ProposalFinished($proposalWithUser));
 
         return response()->json($proposalWithUser);
     }

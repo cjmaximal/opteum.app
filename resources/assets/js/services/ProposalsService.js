@@ -45,6 +45,7 @@ export default {
                 success(response)
             },
             (response) => {
+                console.log(response)
                 error(response)
             }
         )

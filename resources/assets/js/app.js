@@ -26,10 +26,12 @@ require('bootstrap-sass');
 
 import Vue from 'vue'
 import VueResource from 'vue-resource'
+import VueSocketio from 'vue-socket.io'
 import store from './vuex/store'
 import App from './components/App.vue'
 
-Vue.use(VueResource);
+Vue.use(VueResource)
+Vue.use(VueSocketio, ':6001')
 
 Vue.http.interceptors.push((request, next) => {
     request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
@@ -39,6 +41,23 @@ Vue.http.interceptors.push((request, next) => {
 
 new Vue({
     el: '#app',
+    sockets: {
+        ProposalAdded(data) {
+            let proposal = data.proposal[0]
+            console.info('Proposal added', proposal)
+            this.$store.dispatch('eventAddProposal', proposal)
+        },
+        ProposalFinished(data) {
+            let proposal = data.proposal[0]
+            console.info('Proposal finished', proposal)
+            this.$store.dispatch('eventFinishProposal', proposal)
+        },
+        ProposalDeleted(data) {
+            let proposalId = data.proposal.id
+            console.info('Proposal deleted', proposalId)
+            this.$store.dispatch('eventDeleteProposal', proposalId)
+        }
+    },
     store,
     render: h => h(App)
 }).$mount('#app');

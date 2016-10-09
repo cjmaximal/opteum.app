@@ -49,6 +49,7 @@ const mutations = {
      * @param error
      */
         [types.LOADING_PROPOSALS_SUCCESS] (state, proposals, error) {
+        state.proposals = []
         proposals.forEach(function (item, i, arr) {
             state.proposals.unshift(item)
         })
@@ -109,7 +110,7 @@ const mutations = {
      */
         [types.ADDING_PROPOSAL_SUCCESS] (state, {proposal, error}) {
         state.error = error
-        state.proposals.unshift(proposal)
+        // state.proposals.unshift(proposal)
     },
 
     /**
@@ -141,7 +142,7 @@ const mutations = {
      */
         [types.FINISHING_PROPOSAL_SUCCESS] (state, {proposal, updatedProposal, error}) {
         state.error = error
-        state.proposals.splice(state.proposals.indexOf(proposal), 1, updatedProposal)
+        // state.proposals.splice(state.proposals.indexOf(proposal), 1, updatedProposal)
     },
 
     /**
@@ -172,7 +173,7 @@ const mutations = {
      */
         [types.DELETING_PROPOSAL_SUCCESS] (state, {proposal, error}) {
         state.error = error
-        state.proposals.splice(state.proposals.indexOf(proposal), 1)
+        // state.proposals.splice(state.proposals.indexOf(proposal), 1)
     },
 
     /**
@@ -182,6 +183,42 @@ const mutations = {
      */
         [types.DELETING_PROPOSAL_ERROR] (state, error) {
         state.error = error
+    },
+
+
+    /**
+     * Добавить заявку в список
+     * @param state
+     * @param proposal
+     */
+    [types.EVENT_ADD_PROPOSAL] (state, proposal) {
+        state.proposals.unshift(proposal)
+    },
+
+    /**
+     * Завершить заявку
+     * @param state
+     * @param proposal
+     */
+    [types.EVENT_FINISH_PROPOSAL] (state, proposal) {
+        state.proposals.forEach(function (item, i, arr) {
+            if(item.id === proposal.id){
+                state.proposals.splice(i, 1, proposal)
+            }
+        })
+    },
+
+    /**
+     * Удалить заявку
+     * @param state
+     * @param proposalId
+     */
+        [types.EVENT_DELETE_PROPOSAL] (state, proposalId) {
+        state.proposals.forEach(function (item, i, arr) {
+            if(item.id == proposalId){
+                state.proposals.splice(i, 1)
+            }
+        })
     },
 
 

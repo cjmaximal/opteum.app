@@ -1,3 +1,11 @@
+// Добавить заявку в список
+export const EVENT_ADD_PROPOSAL = 'EVENT_ADD_PROPOSAL'
+// Завершить заявку
+export const EVENT_FINISH_PROPOSAL = 'EVENT_FINISH_PROPOSAL'
+// Удалить заявку
+export const EVENT_DELETE_PROPOSAL = 'EVENT_DELETE_PROPOSAL'
+
+
 // Загрузка списка заявок
 export const LOADING_PROPOSALS = 'LOADING_PROPOSALS'
 // Загрузка списка заявок - Успех

@@ -79,8 +79,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Документация</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://github.com/cjmaximal/opteum.app" target="_blank">GitHub</a>
                 </div>
             </div>
         </div>
