@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/opteum-app":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/opteum-app","hostpath":"E:/other/opteum.app","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"E:/other/opteum.app","disabled":false,"__vagrantfile":true}}}
