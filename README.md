@@ -3,9 +3,9 @@ Opteum Test Work
 
 **Стек технологий:**
 
- 1. Бэкенд - API (Laravel 5.3)
- 2. Бэкенд - WS (Node.js)
- 3. Фронтенд - Laravel 5.3 и Vue.js 2.0
+ 1. Бэкенд - API ([Laravel 5.3](https://laravel.com/))
+ 2. Бэкенд - WS ([Node.js](https://nodejs.org/))
+ 3. Фронтенд - [Laravel 5.3](https://laravel.com/) и [Vue.js 2.0](http://vuejs.org/)
 
 ----------
 
@@ -28,6 +28,6 @@ Opteum Test Work
 
  7. Теперь необходимо установить пакеты Laravel через **composer**, набрав в консоли `composer install`
  8. После установки пакетов Laravel, выполните в консоли, в директории проекта `chmod -R 777 storage/`, `composer dump-autoload`, `php artisan cache:clear`
- 9. Теперь необходимо запустить миграцию, выполнив в консоли `php artisan migrate` и добавить в таблицы пользователей, выполнив команду `php artisan db:seed`
- 10. Запустить Node.js сервер для трансляции событий через веб-сокет выполните в консоли `node ws.server/server.js`
-
+ 9. Теперь необходимо запустить миграцию, выполнив в консоли `php artisan migrate`, чтобы создать таблицы и создать пользователей, выполнив команду `php artisan db:seed`
+ 10. Запустить Node.js сервер для трансляции событий через веб-сокет. Выполните в консоли `node ws.server/server.js`
+ 11. Ну и для трансляций событий из Laravel необходимо запустить слушатель очереди выполнив в консоли (в новой вкладке/окне) команду `php artisan queue:work redis --daemon`
