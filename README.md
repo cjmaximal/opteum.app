@@ -14,6 +14,7 @@ Opteum Test Work
 
  1. Установить [Vagrant](https://www.vagrantup.com/docs/installation/) и [VirtualBox](https://www.virtualbox.org/)
  2. Установить PHP (5.6 или выше) и [Composer](https://getcomposer.org/doc/00-intro.md)
+ 2.1 Выполнить в консоли `composer install`
  3. Для автоматической настройки vagrant-коробки необходимо выполнить команду `make`, которая создаст `Vagrantfile` и `Homestead.yaml`
 > Mac / Linux:
 > `php vendor/bin/homestead make`
