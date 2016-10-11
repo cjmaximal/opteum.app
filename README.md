@@ -14,6 +14,8 @@ Opteum Test Work
 
  1. Установить [Vagrant](https://www.vagrantup.com/docs/installation/) и [VirtualBox](https://www.virtualbox.org/)
  2. Установить PHP (5.6 или выше) и [Composer](https://getcomposer.org/doc/00-intro.md)
+ 2. скачиваем архив, либо в консоли `git clone https://github.com/cjmaximal/opteum.app.git`
+ 2. Выполнить в консоли `composer install`, прежде перейдя в директорию проекта
  3. Для автоматической настройки vagrant-коробки необходимо выполнить команду `make`, которая создаст `Vagrantfile` и `Homestead.yaml`
 > Mac / Linux:
 > `php vendor/bin/homestead make`
@@ -27,6 +29,7 @@ Opteum Test Work
  > `cd название_директории _проекта`
 
  7. Теперь необходимо установить пакеты Laravel через **composer**, набрав в консоли `composer install`
+ 7. Так же необходимо установить npm-пакеты выполнив в консоли `npm install`
  8. После установки пакетов Laravel, выполните в консоли, в директории проекта `chmod -R 777 storage/`, `composer dump-autoload`, `php artisan cache:clear`
  9. Теперь необходимо запустить миграцию, выполнив в консоли `php artisan migrate`, чтобы создать таблицы и создать пользователей, выполнив команду `php artisan db:seed`
  10. Запустить Node.js сервер для трансляции событий через веб-сокет. Выполните в консоли `node ws.server/server.js`
