@@ -45,7 +45,7 @@ class ApiProposalsController extends Controller
         Auth::user()->proposals()->save($proposal);
         $proposalWithUser = Proposal::where('id', $proposal->id)->with('user')->get()->present(ApiPresenter::class);
 
-        event(new NewProposalAdded($proposalWithUser));
+//        broadcast(new NewProposalAdded($proposalWithUser))->toOthers();
 
         return response()->json($proposalWithUser);
     }
@@ -59,7 +59,7 @@ class ApiProposalsController extends Controller
     {
         $proposal = Proposal::find($id)->delete();
 
-        event(new ProposalDeleted(['id' => $id]));
+//        event(new ProposalDeleted(['id' => $id]));
 
         return response()->json();
     }
@@ -77,7 +77,7 @@ class ApiProposalsController extends Controller
 
         $proposalWithUser = Proposal::where('id', $proposal->id)->with('user')->get()->present(ApiPresenter::class);
 
-        event(new ProposalFinished($proposalWithUser));
+//        event(new ProposalFinished($proposalWithUser));
 
         return response()->json($proposalWithUser);
     }
