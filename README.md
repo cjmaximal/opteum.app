@@ -9,6 +9,9 @@ Opteum Test Work
 
 ----------
 
+[Демо](http://vm11571.vps.agava.net/)
+-----
+
 Установка
 ---------
 
