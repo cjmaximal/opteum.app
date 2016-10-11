@@ -34,30 +34,37 @@ Vue.use(VueResource)
 Vue.use(VueSocketio, ':6001')
 
 Vue.http.interceptors.push((request, next) => {
-    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken)
 
     next();
-});
+})
 
-new Vue({
+const vm = new Vue({
     el: '#app',
     sockets: {
-        ProposalAdded(data) {
-            let proposal = data.proposal[0]
-            console.info('Proposal added', proposal)
-            this.$store.dispatch('eventAddProposal', proposal)
+        VueProposalAdded(data) {
+            console.info('Vue Proposal added', data)
+            this.$store.dispatch('eventAddProposal', data)
         },
-        ProposalFinished(data) {
-            let proposal = data.proposal[0]
-            console.info('Proposal finished', proposal)
-            this.$store.dispatch('eventFinishProposal', proposal)
+        VueProposalFinished(data) {
+            console.info('Vue Proposal finished', data)
+            this.$store.dispatch('eventFinishProposal', data)
         },
-        ProposalDeleted(data) {
-            let proposalId = data.proposal.id
-            console.info('Proposal deleted', proposalId)
-            this.$store.dispatch('eventDeleteProposal', proposalId)
+        VueProposalDeleted(data) {
+            console.info('Vue Proposal deleted', data)
+            this.$store.dispatch('eventDeleteProposal', data)
+        },
+        VueProposalFinishing(data) {
+            console.info('Vue Proposal Finishing', data)
+            this.$store.dispatch('eventProposalFinishing', data)
+        },
+        VueProposalDeleting(data) {
+            console.info('Vue Proposal Deleting', data)
+            this.$store.dispatch('eventProposalDeleting', data)
         }
     },
     store,
     render: h => h(App)
-}).$mount('#app');
+}).$mount('#app')
+
+export default vm

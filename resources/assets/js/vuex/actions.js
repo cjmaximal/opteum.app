@@ -1,3 +1,4 @@
+import vm from '../app'
 import ProposalService from '../services/ProposalsService'
 import TooltipService from '../services/TooltipService'
 import * as types from '../vuex/mutations-types'
@@ -15,6 +16,16 @@ export const eventFinishProposal = ({commit}, proposal) => {
 // Удалить заявку
 export const eventDeleteProposal = ({commit}, proposalId) => {
     commit(types.EVENT_DELETE_PROPOSAL, proposalId)
+}
+
+// Завершение заявки
+export const eventProposalFinishing = ({commit}, {proposalId, finishing}) => {
+    commit(types.FINISHING_PROPOSAL, {proposalId, finishing})
+}
+
+// Удаление заявки
+export const eventProposalDeleting = ({commit}, {proposalId, deleting}) => {
+    commit(types.DELETING_PROPOSAL, {proposalId, deleting})
 }
 
 
@@ -56,6 +67,8 @@ export const postProposal = ({commit}, newProposal) => {
             commit(types.ADDING_PROPOSAL, false)
             commit(types.ADD_PROPOSAL)
             TooltipService.createTooltips()
+
+            vm.$socket.emit('ProposalAdd', proposal)
         },
         (response) => {
             console.error('Adding New Proposal ERROR', response)
@@ -70,7 +83,10 @@ export const postProposal = ({commit}, newProposal) => {
 // Завершить заявку
 export const finishProposal = ({commit}, proposal) => {
     TooltipService.hideTooltip()
-    commit(types.FINISHING_PROPOSAL, {proposal, finishing:true})
+    let proposalId = proposal.id
+    let data = {proposalId, finishing:true}
+    commit(types.FINISHING_PROPOSAL, data)
+    vm.$socket.emit('ProposalFinishing', data)
     ProposalService.finishProposal(
         (response) => {
             console.info('Finishing Proposal SUCCESS', response)
@@ -78,12 +94,16 @@ export const finishProposal = ({commit}, proposal) => {
             var updatedProposal = response.data[0]
             commit(types.FINISHING_PROPOSAL_SUCCESS, {proposal, updatedProposal, error})
             // commit(types.FINISHING_PROPOSAL, {proposal, finishing:false})
+            vm.$socket.emit('ProposalFinish', updatedProposal)
         },
         (response) => {
             console.error('Finishing Proposal ERROR', response)
             let error = {statusText: response.statusText, status: response.status, ok: response.ok}
             commit(types.FINISHING_PROPOSAL_ERROR, error)
-            commit(types.FINISHING_PROPOSAL, {proposal, finishing:false})
+            let proposalId = proposal.id
+            let data = {proposalId, finishing:false}
+            commit(types.FINISHING_PROPOSAL, data)
+            vm.$socket.emit('ProposalFinishing', data)
         },
         proposal.id
     )
@@ -92,18 +112,26 @@ export const finishProposal = ({commit}, proposal) => {
 // Удалить заявку
 export const deleteProposal = ({commit}, proposal) => {
     TooltipService.hideTooltip()
-    commit(types.DELETING_PROPOSAL, {proposal, deleting:true})
+    let proposalId = proposal.id
+    let data = {proposalId, deleting:true}
+    commit(types.DELETING_PROPOSAL, data)
+    vm.$socket.emit('ProposalDeleting', data)
     ProposalService.deleteProposal(
         (response) => {
             console.info('Deleting Proposal SUCCESS', response)
             var error = {statusText: response.statusText, status: response.status, ok: response.ok}
             commit(types.DELETING_PROPOSAL_SUCCESS, {proposal, error})
+            // commit(types.DELETING_PROPOSAL, {proposal, deleting:false})
+            vm.$socket.emit('ProposalDelete', proposal.id)
         },
         (response) => {
             console.error('Deleting Proposal ERROR', response)
             let error = {statusText: response.statusText, status: response.status, ok: response.ok}
             commit(types.DELETING_PROPOSAL_ERROR, error)
-            commit(types.DELETING_PROPOSAL, {proposal, deleting:false})
+            let proposalId = proposal.id
+            let data = {proposalId, deleting:false}
+            commit(types.DELETING_PROPOSAL, data)
+            vm.$socket.emit('ProposalDeleting', data)
         },
         proposal.id
     )

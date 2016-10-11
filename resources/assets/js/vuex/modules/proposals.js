@@ -110,7 +110,7 @@ const mutations = {
      */
         [types.ADDING_PROPOSAL_SUCCESS] (state, {proposal, error}) {
         state.error = error
-        // state.proposals.unshift(proposal)
+        state.proposals.unshift(proposal)
     },
 
     /**
@@ -126,11 +126,17 @@ const mutations = {
     /**
      * Завершение заявки - процесс
      * @param state
-     * @param proposal
+     * @param proposalId
      * @param finishing
      */
-        [types.FINISHING_PROPOSAL] (state, {proposal, finishing}) {
-        state.proposals[state.proposals.indexOf(proposal)].finishing = finishing
+        [types.FINISHING_PROPOSAL] (state, {proposalId, finishing}) {
+        var proposals = state.proposals
+        for (let i = 0; i < proposals.length; i++) {
+            if (proposals[i].id == proposalId) {
+                state.proposals[i].finishing = finishing
+                break
+            }
+        }
     },
 
     /**
@@ -142,7 +148,7 @@ const mutations = {
      */
         [types.FINISHING_PROPOSAL_SUCCESS] (state, {proposal, updatedProposal, error}) {
         state.error = error
-        // state.proposals.splice(state.proposals.indexOf(proposal), 1, updatedProposal)
+        state.proposals.splice(state.proposals.indexOf(proposal), 1, updatedProposal)
     },
 
     /**
@@ -158,11 +164,17 @@ const mutations = {
     /**
      * Удаление заявки - процесс
      * @param state
-     * @param proposal
+     * @param proposalId
      * @param deleting
      */
-        [types.DELETING_PROPOSAL] (state, {proposal, deleting}) {
-        state.proposals[state.proposals.indexOf(proposal)].deleting = deleting
+        [types.DELETING_PROPOSAL] (state, {proposalId, deleting}) {
+        var proposals = state.proposals
+        for (let i = 0; i < proposals.length; i++) {
+            if (proposals[i].id == proposalId) {
+                state.proposals[i].deleting = deleting
+                break
+            }
+        }
     },
 
     /**
@@ -173,7 +185,7 @@ const mutations = {
      */
         [types.DELETING_PROPOSAL_SUCCESS] (state, {proposal, error}) {
         state.error = error
-        // state.proposals.splice(state.proposals.indexOf(proposal), 1)
+        state.proposals.splice(state.proposals.indexOf(proposal), 1)
     },
 
     /**
@@ -191,7 +203,7 @@ const mutations = {
      * @param state
      * @param proposal
      */
-    [types.EVENT_ADD_PROPOSAL] (state, proposal) {
+        [types.EVENT_ADD_PROPOSAL] (state, proposal) {
         state.proposals.unshift(proposal)
     },
 
@@ -200,12 +212,13 @@ const mutations = {
      * @param state
      * @param proposal
      */
-    [types.EVENT_FINISH_PROPOSAL] (state, proposal) {
-        state.proposals.forEach(function (item, i, arr) {
-            if(item.id === proposal.id){
+        [types.EVENT_FINISH_PROPOSAL] (state, proposal) {
+        for (let i = 0; i < state.proposals.length; i++) {
+            if (state.proposals[i].id == proposal.id) {
                 state.proposals.splice(i, 1, proposal)
+                break
             }
-        })
+        }
     },
 
     /**
@@ -214,11 +227,12 @@ const mutations = {
      * @param proposalId
      */
         [types.EVENT_DELETE_PROPOSAL] (state, proposalId) {
-        state.proposals.forEach(function (item, i, arr) {
-            if(item.id == proposalId){
+        for (let i = 0; i < state.proposals.length; i++) {
+            if (state.proposals[i].id == proposalId) {
                 state.proposals.splice(i, 1)
+                break
             }
-        })
+        }
     },
 
 
