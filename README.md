@@ -11,6 +11,7 @@ Opteum Test Work
 
 [Демо](http://vm11571.vps.agava.net/)
 -----
+[Пример](https://github.com/cjmaximal/other-opt-t-w/raw/master/opteum-test-work.gif)
 
 Установка
 ---------
