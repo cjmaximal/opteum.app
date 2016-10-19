@@ -9,7 +9,7 @@ Opteum Test Work
 
 ----------
 
-[Демо](http://vm11571.vps.agava.net/)
+Демо
 -----
 ![Пример](https://github.com/cjmaximal/other-opt-t-w/raw/master/opteum-test-work.gif)
 
